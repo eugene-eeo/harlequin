@@ -1,4 +1,5 @@
 from collections import OrderedDict
+from email.utils import getaddresses
 from .utils import want_unicode, generate_header
 
 
@@ -10,6 +11,19 @@ class UnicodeDict(OrderedDict):
 
 
 class Headers(UnicodeDict):
-    def add(self, key, value, **params):
+    def add(self, key, value='', **params):
+        if not params:
+            self[key] = value
+            return
         self[key] = generate_header(want_unicode(value),
                                     UnicodeDict(params))
+
+    @property
+    def resent(self):
+        return 'Resent-Date' in self
+
+    @property
+    def sender(self):
+        value = self.get('Sender') or self.get('From')
+        _, addr = getaddresses([value])[0]
+        return addr

@@ -22,3 +22,18 @@ def test_headers_add():
     h = Headers()
     h.add('Key', value, **params)
     assert parse_header(h[u'Key']) == (value, params)
+
+
+def test_headers_resent():
+    h = Headers()
+    h.add('Resent-Date')
+    assert h.resent
+
+
+def test_headers_sender():
+    h = Headers()
+    h.add('From', 'from@mail.com')
+    assert h.sender == 'from@mail.com'
+
+    h.add('Sender', 'Sender <sender@mail.com>')
+    assert h.sender == 'sender@mail.com'
