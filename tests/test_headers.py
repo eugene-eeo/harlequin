@@ -1,7 +1,8 @@
 import pytest
+from email.header import decode_header
 from cgi import parse_header
 from harlequin.headers import UnicodeDict, Headers
-from harlequin.utils import want_bytes
+from harlequin.utils import want_bytes, want_unicode
 
 
 def test_unicodedict_init():
@@ -41,8 +42,8 @@ def headers(resent):
         ('From',   '{r}from@mail.com'),
         ('Sender', '{r}sender@mail.com'),
         ('To',     '{r}to@mail.com'),
-        ('Cc',     'Cc <{r}cc@mail.com>'),
-        ('Bcc',    'Bcc <{r}bcc@mail.com>'),
+        ('Cc',     'ünico∂é <{r}cc@mail.com>'),
+        ('Bcc',    'zomügjå <{r}bcc@mail.com>'),
     ]
 
     headers = Headers()
@@ -82,3 +83,14 @@ def test_headers_receivers(resent, headers):
             'cc@mail.com',
             'bcc@mail.com'
         ]
+
+
+@pytest.mark.parametrize('charset', ['utf8', 'punycode'])
+def test_headers_encode(headers, charset):
+    encoded = headers.encode(charset)
+    keys = list(encoded)
+    assert keys == list(headers)
+    for key in keys:
+        value, guessed = decode_header(encoded[key])[0]
+        assert want_unicode(value, guessed) == headers[key]
+        assert guessed == charset or guessed == None

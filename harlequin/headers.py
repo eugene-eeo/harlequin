@@ -1,4 +1,5 @@
 from collections import OrderedDict
+from email.header import Header
 from email.utils import getaddresses
 from .utils import want_unicode, generate_header
 
@@ -36,3 +37,8 @@ class Headers(UnicodeDict):
                ('Resent-To', 'Resent-Cc', 'Resent-Bcc')
         vals = (v for v in (self.get(key) for key in keys) if v)
         return [addr for _, addr in getaddresses(vals)]
+
+    def encode(self, charset='utf-8'):
+        return OrderedDict(
+            (k, Header(self[k], charset).encode()) for k in self
+        )
