@@ -30,10 +30,55 @@ def test_headers_resent():
     assert h.resent
 
 
-def test_headers_sender():
-    h = Headers()
-    h.add('From', 'from@mail.com')
-    assert h.sender == 'from@mail.com'
+@pytest.fixture(params=[True, False])
+def resent(request):
+    return request.param
 
-    h.add('Sender', 'Sender <sender@mail.com>')
-    assert h.sender == 'sender@mail.com'
+
+@pytest.fixture
+def headers(resent):
+    default = [
+        ('From',   '{r}from@mail.com'),
+        ('Sender', '{r}sender@mail.com'),
+        ('To',     '{r}to@mail.com'),
+        ('Cc',     'Cc <{r}cc@mail.com>'),
+        ('Bcc',    'Bcc <{r}bcc@mail.com>'),
+    ]
+
+    headers = Headers()
+    for key, value in default:
+        headers.add(key, value.format(r=''))
+
+    if resent:
+        headers.add('Resent-Date')
+        for item, fmt in default:
+            headers.add('Resent-'+item, fmt.format(r='resent-'))
+    return headers
+
+
+def test_headers_sender(resent, headers):
+    h = headers
+    if resent:
+        assert h.sender == 'resent-sender@mail.com'
+        del h['Resent-Sender']
+        assert h.sender == 'resent-from@mail.com'
+    else:
+        assert h.sender == 'sender@mail.com'
+        del h['Sender']
+        assert h.sender == 'from@mail.com'
+
+
+def test_headers_receivers(resent, headers):
+    h = headers
+    if resent:
+        assert h.receivers == [
+            'resent-to@mail.com',
+            'resent-cc@mail.com',
+            'resent-bcc@mail.com',
+        ]
+    else:
+        assert h.receivers == [
+            'to@mail.com',
+            'cc@mail.com',
+            'bcc@mail.com'
+        ]

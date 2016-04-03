@@ -24,6 +24,15 @@ class Headers(UnicodeDict):
 
     @property
     def sender(self):
-        value = self.get('Sender') or self.get('From')
+        key, alt = ('Sender', 'From') if not self.resent else \
+                   ('Resent-Sender', 'Resent-From')
+        value = self.get(key) or self.get(alt)
         _, addr = getaddresses([value])[0]
         return addr
+
+    @property
+    def receivers(self):
+        keys = ('To', 'Cc', 'Bcc') if not self.resent else \
+               ('Resent-To', 'Resent-Cc', 'Resent-Bcc')
+        vals = (v for v in (self.get(key) for key in keys) if v)
+        return [addr for _, addr in getaddresses(vals)]
