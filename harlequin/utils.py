@@ -1,4 +1,5 @@
 import sys
+from email.utils import quote
 
 
 if sys.version_info[0] == 3:
@@ -17,3 +18,13 @@ def want_unicode(s, charset='utf-8'):
     if isinstance(s, unicode):
         return s
     return s.decode(charset)
+
+
+def generate_header(value, params):
+    parts = [quote(value)]
+    for key in params:
+        parts.append('{k}="{v}"'.format(
+            k=key,
+            v=quote(params[key]))
+            )
+    return '; '.join(parts)
