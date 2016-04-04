@@ -37,9 +37,9 @@ class Headers(UnicodeDict):
         vals = (v for v in (self.get(key) for key in keys) if v)
         return [addr for _, addr in getaddresses(vals)]
 
-    def encode(self, charset='utf-8'):
+    def encode(self):
         return OrderedDict(
-            (k, encode_header(self[k], charset)) for k in self
+            (k, encode_header(self[k])) for k in self
         )
 
 

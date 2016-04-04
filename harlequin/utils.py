@@ -31,5 +31,12 @@ def generate_header(value, params):
     return '; '.join(parts)
 
 
-def encode_header(string, charset='utf-8'):
-    return Header(string, charset).encode()
+def encode_header(string):
+    # Don't explicitly specify encoding so that the header
+    # class can figure out how to best encode the value.
+    # for instance:
+    #   >>> Header('one').encode()
+    #   'one'
+    #   >>> Header('one', charset='utf-8').encode()
+    #   '=?utf-8?q?one?='
+    return Header(string).encode()

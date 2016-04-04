@@ -3,7 +3,7 @@ from email.message import Message
 from email.header import decode_header
 from cgi import parse_header
 from harlequin.headers import UnicodeDict, Headers, prepare_mime
-from harlequin.utils import want_bytes, want_unicode
+from harlequin.utils import want_bytes, want_unicode, encode_header
 
 
 def test_unicodedict_init():
@@ -91,9 +91,8 @@ def test_headers_receivers(resent, headers):
         ]
 
 
-@pytest.mark.parametrize('charset', ['utf8', 'punycode'])
-def test_headers_encode(headers, charset):
-    encoded = headers.encode(charset)
+def test_headers_encode(headers):
+    encoded = headers.encode()
     keys = list(encoded)
     assert keys == list(headers)
     for key in keys:
@@ -101,7 +100,7 @@ def test_headers_encode(headers, charset):
         assert want_unicode(value, guessed) == headers[key]
         # some values without characters outside of ascii
         # need not be encoded with the specified encoding
-        assert guessed == charset or \
+        assert guessed == 'utf-8' or \
                guessed == None
 
 
@@ -112,5 +111,5 @@ def test_prepare_mime(headers):
     keys = list(mime.keys())
     for key in keys:
         assert key not in ('Bcc', 'Resent-Bcc')
-        assert mime[key] == encoded[key]
+        assert mime[key] == encode_header(headers[key])
     assert keys
