@@ -21,7 +21,7 @@ def test_attachment_mime(attachment):
     a = attachment
     m = a.mime()
     is_gif = '.gif' in attachment.path
-    assert m['Content-Transfer-Encoding'] == encode_header(u'base64')
+    assert m['Content-Transfer-Encoding'] == encode_header('base64')
     assert m.get_content_type() == 'image/gif' if is_gif else 'text/plain'
     assert m['Content-Disposition'] == generate_header(
         'attachment',
@@ -38,5 +38,5 @@ def test_attachment_headers(attachment):
         }
     )
     m = a.mime()
-    assert m['Content-Type'] == encode_header(u'arb')
-    assert m['X-Key'] == encode_header(u'value')
+    assert m['Content-Type'] == encode_header('arb')
+    assert m['X-Key'] == encode_header('value')

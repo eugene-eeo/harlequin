@@ -14,27 +14,31 @@ def enclosure():
     return PlainText(
         'content',
         headers={
-            'Sender': u'sender@måil.com',
-            'To':     u'to@måîl.com',
+            'Sender': 'sender@måil.com',
+            'To':     'to@måîl.com',
         })
 
 
 def test_encode_address():
-    assert encode_address(u'üni') == u'üni'
-    assert encode_address(u'uni@mail.com') == u'uni@mail.com'
-    assert encode_address(u'üni@mail.com') == u'üni@mail.com'
-    assert encode_address(u'üni@måil.com') == u'üni@xn--mil-ula.com'
+    assert encode_address('üni') == 'üni'
+    assert encode_address('uni@mail.com') == 'uni@mail.com'
+    assert encode_address('üni@mail.com') == 'üni@mail.com'
+    assert encode_address('üni@måil.com') == 'üni@xn--mil-ula.com'
+
+
+def _test_mime(mime):
+    assert mime['Sender'] == encode_header('sender@måil.com')
+    assert mime['To'] == encode_header('to@måîl.com')
+    assert b64decode(want_bytes(mime.get_payload())) == want_bytes('content')
 
 
 def test_sendmail_args(enclosure):
     sender, receivers, string = sendmail_args(enclosure)
-    assert sender == encode_address(u'sender@måil.com')
-    assert receivers == [encode_address(u'to@måîl.com')]
+    assert sender == encode_address('sender@måil.com')
+    assert receivers == [encode_address('to@måîl.com')]
 
     mime = Parser().parsestr(string)
-    assert mime['Sender'] == encode_header(u'sender@måil.com')
-    assert mime['To'] == encode_header(u'to@måîl.com')
-    assert b64decode(mime.get_payload()) == want_bytes('content')
+    _test_mime(mime)
 
 
 def test_sendmail_real(smtpserver, enclosure):
@@ -47,6 +51,4 @@ def test_sendmail_real(smtpserver, enclosure):
     assert len(smtpserver.outbox) == 1
 
     m = smtpserver.outbox[0]
-    assert m['Sender'] == encode_header(u'sender@måil.com')
-    assert m['To']     == encode_header(u'to@måîl.com')
-    assert b64decode(m.get_payload()) == want_bytes('content')
+    _test_mime(m)

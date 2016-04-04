@@ -8,8 +8,8 @@ from harlequin.enclosure import Collection, PlainText
 @pytest.fixture(scope='module')
 def parts():
     return [
-        PlainText(u'∂', headers={'X-Key-1': 'one'}),
-        PlainText(u'é', headers={'X-Key-2': 'two'}),
+        PlainText('∂', headers={'X-Key-1': 'one'}),
+        PlainText('é', headers={'X-Key-2': 'two'}),
     ]
 
 
@@ -36,9 +36,9 @@ def test_collection_mime_headers(parts, collection):
     m0 = collection.mime()
     m1, m2 = m0.get_payload()
 
-    assert m0['X-Key'] == encode_header(u'value')
-    assert m1['X-Key-1'] == encode_header(u'one')
-    assert m2['X-Key-2'] == encode_header(u'two')
+    assert m0['X-Key'] == encode_header('value')
+    assert m1['X-Key-1'] == encode_header('one')
+    assert m2['X-Key-2'] == encode_header('two')
 
 
 def test_collection_nested(parts, collection):

@@ -8,15 +8,15 @@ from harlequin.utils import want_unicode, want_bytes, \
 
 
 def test_want_unicode():
-    assert want_unicode(u'∂') == u'∂'
-    assert want_unicode(u'∂'.encode('utf-8')) == u'∂'
-    assert want_unicode(u'∂'.encode('punycode'), 'punycode') == u'∂'
+    assert want_unicode('∂') == '∂'
+    assert want_unicode('∂'.encode('utf-8')) == '∂'
+    assert want_unicode('∂'.encode('punycode'), 'punycode') == '∂'
 
 
 def test_want_bytes():
-    assert want_bytes(u'∂') == u'∂'.encode('utf-8')
-    assert want_bytes(u'∂', 'punycode') == u'∂'.encode('punycode')
-    assert want_bytes(u'∂'.encode('punycode')) == u'∂'.encode('punycode')
+    assert want_bytes('∂') == '∂'.encode('utf-8')
+    assert want_bytes('∂', 'punycode') == '∂'.encode('punycode')
+    assert want_bytes('∂'.encode('punycode')) == '∂'.encode('punycode')
 
 
 @pytest.mark.parametrize('key', ['key', 'key\'', 'key\\'])
