@@ -19,8 +19,8 @@ def test_enclosure_mime_object():
 def test_enclosure_headers():
     args = [
         ('X-Key',  'value'),
-        ('Sender', 'sender@mail.com'),
-        ('To',     'to@mail.com'),
+        ('Sender', 'Sender <sender@mail.com>'),
+        ('To',     'Receiver <to@mail.com>'),
     ]
     enclosure = CustomEnclosure(args)
     assert enclosure.headers == Headers(args)
