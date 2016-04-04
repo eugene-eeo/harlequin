@@ -8,9 +8,9 @@ python:
     - '3.4'
     - 'pypy'
     - 'pypy3'
-script: make
+script: py.test --strict -vv tests
 install:
     - pip install .
-    - pip install pytest-cov pytest-localserver
+    - pip install pytest-localserver
 os:
     - linux
