@@ -1,4 +1,5 @@
 import pytest
+from smtplib import SMTP
 from base64 import b64decode
 from email.parser import Parser
 from harlequin.enclosure import PlainText
@@ -6,27 +7,39 @@ from harlequin.wire import encode_address, sendmail_args
 from harlequin.utils import want_bytes, encode_header
 
 
-def test_encode_address():
-    assert encode_address('üni') == want_bytes('üni')
-    assert encode_address('uni@mail.com') == want_bytes('uni@mail.com')
-    assert encode_address('üni@mail.com') == want_bytes('üni@mail.com')
-    assert encode_address('üni@måil.com') == \
-            want_bytes('üni') \
-            + want_bytes('@') \
-            + want_bytes('måil.com', charset='idna')
-
-
-def test_sendmail_args():
-    sender, receivers, string = sendmail_args(PlainText(
+@pytest.fixture(scope='module')
+def enclosure():
+    return PlainText(
         'content',
         headers={
-            'Sender': 'sender@mail.com',
-            'To':     'to@mail.com',
-        }))
-    assert sender == encode_address(u'sender@mail.com')
-    assert receivers == [encode_address(u'to@mail.com')]
+            'Sender': 'sender@måil.com',
+            'To':     'to@måîl.com',
+        })
+
+
+def test_encode_address():
+    assert encode_address('üni') == u'üni'
+    assert encode_address('uni@mail.com') == u'uni@mail.com'
+    assert encode_address('üni@mail.com') == u'üni@mail.com'
+    assert encode_address('üni@måil.com') == u'üni@xn--mil-ula.com'
+
+
+def test_sendmail_args(enclosure):
+    sender, receivers, string = sendmail_args(enclosure)
+    assert sender == encode_address(u'sender@måil.com')
+    assert receivers == [encode_address(u'to@måîl.com')]
 
     mime = Parser().parsestr(string)
-    assert mime['Sender'] == encode_header(u'sender@mail.com')
-    assert mime['To'] == encode_header(u'to@mail.com')
+    assert mime['Sender'] == encode_header(u'sender@måil.com')
+    assert mime['To'] == encode_header(u'to@måîl.com')
     assert b64decode(mime.get_payload()) == want_bytes('content')
+
+
+def test_sendmail_real(smtpserver, enclosure):
+    host = smtpserver.addr[0]
+    port = smtpserver.addr[1]
+    s = SMTP(host, port)
+    s.sendmail(*sendmail_args(enclosure))
+    s.quit()
+
+    assert len(smtpserver.outbox) == 1

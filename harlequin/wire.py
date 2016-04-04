@@ -10,7 +10,7 @@ def encode_address(addr, encoding='utf-8'):
             ])
         else:
             addr = addr.encode(encoding)
-    return addr
+    return addr.decode('utf-8')
 
 
 def sendmail_args(enclosure_like):

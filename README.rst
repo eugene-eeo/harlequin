@@ -25,8 +25,8 @@ Harlequin only handles email-creation. Includes goodies like:
         ))
 
     >>> mail_from
-    b'name@xn--dna-a-fsa3a.org'
+    'name@xn--dna-a-fsa3a.org'
     >>> rcpt_to
-    [b'unic@idna-ae.org']
+    ['unic@idna-ae.org']
     >>> content
     # Content-Type: ...
