@@ -29,3 +29,10 @@ def test_plaintext_mime(encoding):
     assert not m.defects
     assert m['X-Key'] == encode_header(u'value')
     assert m['Sender'] == encode_header(u'sender@mail.com')
+
+
+def test_html_type(encoding):
+    p = HTML(u'ünico∂é', encoding=encoding)
+    m = p.mime_object()
+    assert not m.defects
+    assert m.get_content_type() == 'text/html'
