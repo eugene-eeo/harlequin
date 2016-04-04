@@ -2,6 +2,7 @@ from os.path import basename
 from email.encoders import encode_base64
 from email.mime.base import MIMEBase
 from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 from .headers import Headers, prepare_mime
 from .utils import guess
@@ -25,6 +26,19 @@ class Enclosure(object):
     def mime(self):
         mime = self.mime_object()
         prepare_mime(mime, self.headers)
+        return mime
+
+
+class Collection(Enclosure):
+    def __init__(self, enclosures, **kwargs):
+        self.subtype = kwargs.pop('subtype', 'mixed')
+        self.enclosures = enclosures
+        Enclosure.__init__(self, **kwargs)
+
+    def mime_object(self):
+        mime = MIMEMultipart(self.subtype)
+        for item in self.enclosures:
+            mime.attach(item.mime())
         return mime
 
 
