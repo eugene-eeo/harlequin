@@ -1,7 +1,10 @@
+from os.path import basename
 from email.encoders import encode_base64
 from email.mime.base import MIMEBase
 from email.mime.text import MIMEText
+
 from .headers import Headers, prepare_mime
+from .utils import guess
 
 
 class Enclosure(object):
@@ -54,3 +57,20 @@ class Binary(Enclosure):
                             charset=self.encoding)
         self.encoder(mime)
         return mime
+
+
+class Attachment(Binary):
+    def __init__(self, path, headers=()):
+        self.path = path
+        self.mimetype, self.encoding = guess(path)
+        self.encoder = encode_base64
+        heads = Headers()
+        heads.add('Content-Disposition', 'attachment',
+                  filename=basename(path))
+        heads.update(headers)
+        self.headers = heads
+
+    @property
+    def content(self):
+        with open(self.path, 'rb') as f:
+            return f.read()

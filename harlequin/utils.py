@@ -1,4 +1,5 @@
 import sys
+import mimetypes
 from email.utils import quote
 from email.header import Header
 
@@ -40,3 +41,10 @@ def encode_header(string):
     #   >>> Header('one', charset='utf-8').encode()
     #   '=?utf-8?q?one?='
     return Header(string).encode()
+
+
+def guess(path, fallback='application/octet-stream'):
+    guessed, encoding = mimetypes.guess_type(path, fallback)
+    if guessed is None:
+        return fallback, encoding
+    return guessed, encoding
