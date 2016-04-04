@@ -37,4 +37,4 @@ def test_headers_priority(binary):
             ('Content-Type', 'thing'),
         ])
     m = b.mime()
-    assert m['Content-Type'] == 'thing'
+    assert m['Content-Type'] == encode_header(u'thing')
