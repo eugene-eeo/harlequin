@@ -4,6 +4,9 @@ harlequin
 .. image:: https://travis-ci.org/eugene-eeo/harlequin.svg?branch=master
     :target: https://travis-ci.org/eugene-eeo/harlequin
 
+.. image:: https://ci.appveyor.com/api/projects/status/rda1s4gghx6c6wsr/branch/master?svg=true
+    :target: https://ci.appveyor.com/project/eugene-eeo/harlequin
+
 A composable and sane alternative to MIME-handling for Python.
 The name comes from mime, which is synonymous with harlequin.
 Harlequin only handles email-creation. Includes goodies like:
