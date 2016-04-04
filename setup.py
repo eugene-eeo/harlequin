@@ -19,5 +19,6 @@ setup(
         'pytest-cov',
     ],
     platforms='any',
+    license='MIT',
     zip_safe=False,
 )
