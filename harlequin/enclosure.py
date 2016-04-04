@@ -12,8 +12,7 @@ class Enclosure(object):
 
     def mime(self):
         mime = self.mime_object()
-        encoded = self.headers.encode()
-        prepare_mime(mime, encoded)
+        prepare_mime(mime, self.headers)
         return mime
 
 

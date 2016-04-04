@@ -37,15 +37,10 @@ class Headers(UnicodeDict):
         vals = (v for v in (self.get(key) for key in keys) if v)
         return [addr for _, addr in getaddresses(vals)]
 
-    def encode(self):
-        return OrderedDict(
-            (k, encode_header(self[k])) for k in self
-        )
 
-
-def prepare_mime(mime, encoded):
-    for key in encoded:
+def prepare_mime(mime, headers):
+    for key in headers:
         if key == 'Bcc' or key == 'Resent-Bcc':
             continue
         del mime[key]
-        mime[key] = encoded[key]
+        mime[key] = encode_header(headers[key])

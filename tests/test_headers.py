@@ -91,23 +91,9 @@ def test_headers_receivers(resent, headers):
         ]
 
 
-def test_headers_encode(headers):
-    encoded = headers.encode()
-    keys = list(encoded)
-    assert keys == list(headers)
-    for key in keys:
-        value, guessed = decode_header(encoded[key])[0]
-        assert want_unicode(value, guessed) == headers[key]
-        # some values without characters outside of ascii
-        # need not be encoded with the specified encoding
-        assert guessed == 'utf-8' or \
-               guessed == None
-
-
 def test_prepare_mime(headers):
-    encoded = headers.encode()
     mime = Message()
-    prepare_mime(mime, encoded)
+    prepare_mime(mime, headers)
     keys = list(mime.keys())
     for key in keys:
         assert key not in ('Bcc', 'Resent-Bcc')

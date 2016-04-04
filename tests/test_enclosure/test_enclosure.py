@@ -2,6 +2,7 @@ import pytest
 from email.message import Message
 from harlequin.enclosure import Enclosure
 from harlequin.headers import Headers
+from harlequin.utils import encode_header
 
 
 class CustomEnclosure(Enclosure):
@@ -27,7 +28,8 @@ def test_enclosure_mime():
         ('X-Key', 'value'),
     ]
     enclosure = CustomEnclosure(headers)
-    encoded = enclosure.headers.encode()
     mime = enclosure.mime()
-    placed = dict(mime)
-    assert placed == encoded
+    assert dict(mime) == {
+        'Sender': encode_header('sender@mail.com'),
+        'X-Key':  encode_header('value'),
+    }
