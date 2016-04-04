@@ -1,7 +1,6 @@
 from collections import OrderedDict
-from email.header import Header
 from email.utils import getaddresses
-from .utils import want_unicode, generate_header
+from .utils import want_unicode, generate_header, encode_header
 
 
 class UnicodeDict(OrderedDict):
@@ -40,7 +39,7 @@ class Headers(UnicodeDict):
 
     def encode(self, charset='utf-8'):
         return OrderedDict(
-            (k, Header(self[k], charset).encode()) for k in self
+            (k, encode_header(self[k], charset)) for k in self
         )
 
 

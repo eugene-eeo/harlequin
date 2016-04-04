@@ -1,5 +1,6 @@
 import sys
 from email.utils import quote
+from email.header import Header
 
 
 if sys.version_info[0] == 3:
@@ -28,3 +29,7 @@ def generate_header(value, params):
             v=quote(params[key]))
             )
     return '; '.join(parts)
+
+
+def encode_header(string, charset='utf-8'):
+    return Header(string, charset).encode()

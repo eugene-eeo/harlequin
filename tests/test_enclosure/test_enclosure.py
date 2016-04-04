@@ -9,6 +9,12 @@ class CustomEnclosure(Enclosure):
         return Message()
 
 
+def test_enclosure_mime_object():
+    e = Enclosure()
+    with pytest.raises(NotImplementedError):
+        e.mime_object()
+
+
 def test_enclosure_headers():
     args = [('X-Key', 'value')]
     enclosure = CustomEnclosure(args)
