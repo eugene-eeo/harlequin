@@ -3,11 +3,9 @@ import mimetypes
 from email.utils import quote
 from email.header import Header
 
-
-if sys.version_info[0] == 3:
-    unicode = str
-else:
-    bytes = str
+PY3 = sys.version_info[0] == 3
+unicode = str if PY3 else unicode
+bytes   = bytes if PY3 else str
 
 
 def want_bytes(s, charset='utf-8'):

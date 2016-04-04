@@ -7,6 +7,7 @@ from harlequin.utils import want_bytes, encode_header
 
 
 def test_encode_address():
+    assert encode_address('üni') == want_bytes('üni')
     assert encode_address('uni@mail.com') == want_bytes('uni@mail.com')
     assert encode_address('üni@mail.com') == want_bytes('üni@mail.com')
     assert encode_address('üni@måil.com') == \

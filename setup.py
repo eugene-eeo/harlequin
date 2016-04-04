@@ -16,6 +16,7 @@ setup(
     tests_require=[
         'pytest',
         'pytest-localserver',
+        'pytest-cov',
     ],
     platforms='any',
     zip_safe=False,
