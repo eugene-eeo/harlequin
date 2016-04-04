@@ -25,10 +25,7 @@ def want_unicode(s, charset='utf-8'):
 def generate_header(value, params):
     parts = [quote(value)]
     for key in params:
-        parts.append('{k}="{v}"'.format(
-            k=key,
-            v=quote(params[key]))
-            )
+        parts.append('%s="%s"' % (key, quote(params[key])))
     return '; '.join(parts)
 
 
