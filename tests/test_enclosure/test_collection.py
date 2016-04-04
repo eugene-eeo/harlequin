@@ -37,3 +37,19 @@ def test_collection_mime_headers(parts, collection):
     assert m0['X-Key'] == encode_header(u'value')
     assert m1['X-Key-1'] == encode_header(u'one')
     assert m2['X-Key-2'] == encode_header(u'two')
+
+
+def test_collection_nested(parts, collection):
+    c = Collection(parts + [collection])
+    m = c.mime()
+
+    assert not m.defects
+
+    p1, p2, c1 = m.get_payload()
+    p3, p4     = c1.get_payload()
+
+    assert p1.get_payload() == parts[0].mime().get_payload()
+    assert p2.get_payload() == parts[1].mime().get_payload()
+
+    assert p3.get_payload() == parts[0].mime().get_payload()
+    assert p4.get_payload() == parts[1].mime().get_payload()
