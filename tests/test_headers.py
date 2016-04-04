@@ -1,7 +1,8 @@
 import pytest
+from email.message import Message
 from email.header import decode_header
 from cgi import parse_header
-from harlequin.headers import UnicodeDict, Headers
+from harlequin.headers import UnicodeDict, Headers, prepare_mime
 from harlequin.utils import want_bytes, want_unicode
 
 
@@ -98,4 +99,18 @@ def test_headers_encode(headers, charset):
     for key in keys:
         value, guessed = decode_header(encoded[key])[0]
         assert want_unicode(value, guessed) == headers[key]
-        assert guessed == charset or guessed == None
+        # some values without characters outside of ascii
+        # need not be encoded with the specified encoding
+        assert guessed == charset or \
+               guessed == None
+
+
+def test_prepare_mime(headers):
+    encoded = headers.encode()
+    mime = Message()
+    prepare_mime(mime, encoded)
+    keys = list(mime.keys())
+    for key in keys:
+        assert key not in ('Bcc', 'Resent-Bcc')
+        assert mime[key] == encoded[key]
+    assert keys

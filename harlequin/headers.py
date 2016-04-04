@@ -42,3 +42,11 @@ class Headers(UnicodeDict):
         return OrderedDict(
             (k, Header(self[k], charset).encode()) for k in self
         )
+
+
+def prepare_mime(mime, encoded):
+    for key in encoded:
+        if key == 'Bcc' or key == 'Resent-Bcc':
+            continue
+        del mime[key]
+        mime[key] = encoded[key]
