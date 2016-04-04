@@ -1,4 +1,5 @@
 # -*- coding: UTF-8 -*-
+from __future__ import unicode_literals
 import pytest
 from smtplib import SMTP
 from base64 import b64decode
@@ -13,8 +14,8 @@ def enclosure():
     return PlainText(
         'content',
         headers={
-            'Sender': 'sender@måil.com',
-            'To':     'to@måîl.com',
+            'Sender': u'sender@måil.com',
+            'To':     u'to@måîl.com',
         })
 
 

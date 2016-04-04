@@ -1,4 +1,5 @@
 # -*- coding: UTF-8 -*-
+from __future__ import unicode_literals
 import pytest
 from email.message import Message
 from email.header import decode_header

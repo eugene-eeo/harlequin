@@ -1,4 +1,5 @@
 # -*- coding: UTF-8 -*-
+from __future__ import unicode_literals
 import pytest
 from harlequin.utils import encode_header
 from harlequin.enclosure import Collection, PlainText

@@ -1,4 +1,5 @@
 # -*- coding: UTF-8 -*-
+from __future__ import unicode_literals
 import pytest
 from base64 import b64decode
 from harlequin.utils import encode_header
