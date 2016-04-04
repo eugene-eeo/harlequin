@@ -10,7 +10,7 @@ python:
     - 'pypy3'
 script: make
 install:
-    - python setup.py install
-    - python setup.py test
+    - pip install .
+    - pip install pytest-cov pytest-localserver
 os:
     - linux
