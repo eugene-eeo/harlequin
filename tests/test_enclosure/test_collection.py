@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 import pytest
 from harlequin.utils import encode_header
 from harlequin.enclosure import Collection, PlainText

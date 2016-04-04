@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 import pytest
 from os.path import basename
 from harlequin.enclosure import Attachment

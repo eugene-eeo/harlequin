@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 import pytest
 from harlequin.envelope import Envelope
 from harlequin.enclosure import Enclosure

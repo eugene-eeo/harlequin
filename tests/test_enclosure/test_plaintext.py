@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 import pytest
 from base64 import b64decode
 from harlequin.utils import encode_header
