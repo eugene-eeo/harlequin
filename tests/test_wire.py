@@ -18,10 +18,10 @@ def enclosure():
 
 
 def test_encode_address():
-    assert encode_address('üni') == u'üni'
-    assert encode_address('uni@mail.com') == u'uni@mail.com'
-    assert encode_address('üni@mail.com') == u'üni@mail.com'
-    assert encode_address('üni@måil.com') == u'üni@xn--mil-ula.com'
+    assert encode_address(u'üni') == u'üni'
+    assert encode_address(u'uni@mail.com') == u'uni@mail.com'
+    assert encode_address(u'üni@mail.com') == u'üni@mail.com'
+    assert encode_address(u'üni@måil.com') == u'üni@xn--mil-ula.com'
 
 
 def test_sendmail_args(enclosure):
