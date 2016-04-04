@@ -13,7 +13,10 @@ setup(
     include_package_data=True,
     package_data={'harlequin': ['LICENSE', 'README.rst']},
     packages=['harlequin'],
-    tests_require=['pytest'],
+    tests_require=[
+        'pytest',
+        'pytest-localserver',
+    ],
     platforms='any',
     zip_safe=False,
 )
