@@ -43,3 +43,8 @@ def test_sendmail_real(smtpserver, enclosure):
     s.quit()
 
     assert len(smtpserver.outbox) == 1
+
+    m = smtpserver.outbox[0]
+    assert m['Sender'] == encode_header(u'sender@måil.com')
+    assert m['To']     == encode_header(u'to@måîl.com')
+    assert b64decode(m.get_payload()) == want_bytes('content')
