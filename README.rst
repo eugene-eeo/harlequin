@@ -12,7 +12,7 @@ Harlequin only handles email-creation. Includes goodies like:
 - Unicode aware headers and classes
 - Python 3 readiness
 
-.. code-block::
+.. code-block:: python
 
     >>> from harlequin.enclosure import PlainText
     >>> from harlequin.wire import sendmail_args
