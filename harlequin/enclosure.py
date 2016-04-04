@@ -14,6 +14,14 @@ class Enclosure(object):
     def mime_object(self):
         raise NotImplementedError
 
+    @property
+    def sender(self):
+        return self.headers.sender
+
+    @property
+    def receivers(self):
+        return self.headers.receivers
+
     def mime(self):
         mime = self.mime_object()
         prepare_mime(mime, self.headers)
