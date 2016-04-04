@@ -1,5 +1,5 @@
 test:
-	py.test tests \
+	@py.test tests \
 		--strict \
 		--cov=harlequin \
 		--cov-report=term-missing
