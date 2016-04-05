@@ -7,9 +7,10 @@ Harlequin: Sane MIME Handling
 .. image:: https://ci.appveyor.com/api/projects/status/rda1s4gghx6c6wsr/branch/master?svg=true
     :target: https://ci.appveyor.com/project/eugene-eeo/harlequin
 
-An MIT-licensed, composable and sane alternative to MIME-handling
-for Python. Inspired by Werkzeug, Harlequin handles inconveniences
-associated with internalisation and encoding for you::
+An MIT-licensed, Python 3 ready library for a composable and sane
+alternative to MIME-handling in Python. Inspired by Werkzeug,
+Harlequin handles inconveniences associated with internalisation
+and encoding for you::
 
     >>> from harlequin.enclosure import PlainText
     >>> from harlequin.wire import sendmail_args
@@ -36,4 +37,3 @@ Features
 - ``Resent-*`` aware headers and RFC compliance
 - Automatic sender/receiver address extraction
 - Unicode aware headers and classes
-- Python 3 readiness
