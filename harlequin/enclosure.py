@@ -1,3 +1,13 @@
+"""
+    harlequin.enclosure
+    ~~~~~~~~~~~~~~~~~~~
+
+    Implements enclosure objects.
+
+    :copyright: (c) 2016 Eeo Jun.
+    :license: MIT, see LICENSE for details.
+"""
+
 from os.path import basename
 from email.encoders import encode_base64
 from email.mime.base import MIMEBase
@@ -81,16 +91,12 @@ class Binary(Enclosure):
         return mime
 
 
-class Attachment(Binary):
+class BinaryFile(Binary):
     def __init__(self, path, headers=()):
         self.path = path
         self.mimetype, self.encoding = guess(path)
         self.encoder = encode_base64
-        heads = Headers()
-        heads.add('Content-Disposition', 'attachment',
-                  filename=basename(path))
-        heads.update(headers)
-        self.headers = heads
+        self.headers = Headers(headers)
 
     @property
     def content(self):
