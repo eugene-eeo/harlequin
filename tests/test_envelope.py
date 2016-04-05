@@ -34,3 +34,13 @@ def test_envelope_mime(envelope, enclosure):
     uniq = []
     enclosure.mime = lambda: uniq
     assert envelope.mime() is uniq
+
+
+def test_envelope_empty_mail_from(enclosure):
+    env = Envelope(enclosure, '')
+    assert env.sender == ''
+
+
+def test_envelope_empty_rcpt_to(enclosure):
+    env = Envelope(enclosure, rcpt_to=[])
+    assert env.receivers == []
