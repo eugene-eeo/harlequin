@@ -60,8 +60,8 @@ def headers(resent):
 
     if resent:
         headers.add('Resent-Date')
-        for item, fmt in default:
-            headers.add('Resent-'+item, fmt.format(r='resent-'))
+        for key, value in default:
+            headers.add('Resent-'+key, value.format(r='resent-'))
     return headers
 
 
