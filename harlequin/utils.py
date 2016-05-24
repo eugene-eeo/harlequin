@@ -8,6 +8,8 @@
     :license: MIT, see LICENSE for details.
 """
 
+from __future__ import unicode_literals
+
 import sys
 import mimetypes
 from email.utils import quote
@@ -41,8 +43,8 @@ def want_unicode(s, charset='utf-8'):
 
 def generate_header(value, params):
     """
-    Given *value* and parameters *params* return a string
-    suitable for use as a value of a header. Usage
+    Given unicode *value* and parameters *params* return a
+    string suitable for use as a value of a header. Usage
     examples:
 
         >>> generate_header('value')
