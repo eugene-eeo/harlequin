@@ -63,16 +63,11 @@ class Headers(UnicodeDict):
     @property
     def sender(self):
         """
-        Gets the canonical 'sender' address. This is
-        determined by looking at the ``Sender`` header
-        and then the ``From`` header. Alternatively if the
-        message was resent and hence a ``Resent-Date``
-        header is present, look at ``Resent-Sender``
-        and ``Resent-From``, in that order.
-
-        **Note:** the "canonical" value refers to the
-        fact that the addresses are not encoded and are
-        simply returned "as-is" from the headers.
+        Gets the address of the 'sender'. This is determined
+        by looking at the ``Sender`` header and then the
+        ``From`` header. Alternatively if a ``Resent-Date``
+        header is present, look at ``Resent-Sender`` and
+        ``Resent-From``, in that order.
         """
         key, alt = ('Sender', 'From') if not self.resent else \
                    ('Resent-Sender', 'Resent-From')
@@ -83,10 +78,10 @@ class Headers(UnicodeDict):
     @property
     def receivers(self):
         """
-        Gets a list of canonical addresses to deliver
-        the message to. This looks at the ``To``,
-        ``Cc`` and ``Bcc`` headers, or the ``Resent-*``
-        variant similar to :attr:``Headers.sender``.
+        Gets a list of addresses to deliver the message to.
+        This looks at the ``To``, ``Cc`` and ``Bcc`` headers,
+        or their ``Resent-*`` variants if a ``Resent-Date``
+        header is present.
         """
         keys = ('To', 'Cc', 'Bcc') if not self.resent else \
                ('Resent-To', 'Resent-Cc', 'Resent-Bcc')
