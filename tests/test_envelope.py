@@ -14,10 +14,13 @@ def enclosure():
 
 @pytest.fixture(scope='module', params=[True, False])
 def envelope(request, enclosure):
-    env = Envelope(enclosure)
+    args = {}
     if request.param:
-        env.mail_from = 'mail_from@mail.com'
-        env.rcpt_to   = ['rcpt_to@mail.com']
+        args = {
+            'mail_from': 'mail_from@mail.com',
+            'rcpt_to': ['rcpt_to@mail.com'],
+        }
+    env = Envelope(enclosure, **args)
     return env
 
 
