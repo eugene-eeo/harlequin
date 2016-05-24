@@ -27,12 +27,12 @@ def test_collection_mime_object(parts, collection):
     mimes = m.get_payload()
     assert mimes
 
-    for idx, mime in enumerate(mimes):
+    for enclosure, mime in zip(parts, mimes):
         assert mime.get_content_type() == 'text/plain'
-        assert mime.get_payload() == parts[idx].mime().get_payload()
+        assert mime.get_payload() == enclosure.mime().get_payload()
 
 
-def test_collection_mime_headers(parts, collection):
+def test_collection_mime_headers(collection):
     m0 = collection.mime()
     m1, m2 = m0.get_payload()
 

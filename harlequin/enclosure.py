@@ -148,7 +148,7 @@ class Binary(Enclosure):
     def mime_object(self):
         args = {}
         if self.encoding:
-            args = {'charset': self.encoding}
+            args['charset'] = self.encoding
         mime = MIMEBase(*self.mimetype.split('/'), **args)
         mime.set_payload(self.content)
         self.encoder(mime)

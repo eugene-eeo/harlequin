@@ -27,6 +27,7 @@ def test_encode_address():
 
 
 def _test_mime(mime):
+    assert not mime.defects
     assert mime['Sender'] == encode_header('sender@måil.com')
     assert mime['To'] == encode_header('to@måîl.com')
     assert b64decode(want_bytes(mime.get_payload())) == want_bytes('content')
