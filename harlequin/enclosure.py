@@ -21,12 +21,11 @@ from .utils import guess
 class Enclosure(object):
     """
     Base enclosure object. Enclosure objects encapsulate
-    content and headers, and initialise the appropriate
-    MIME object.
+    content and headers, and initialise the appropriate MIME
+    object. Meant for subclassing.
 
-    :param headers: List/mapping of header to values.
-        This will override any headers set by the
-        `mime_object` method.
+    :param headers: List/mapping of header to values. This will
+        override any headers set by the `mime_object` method.
     """
 
     def __init__(self, headers=()):
@@ -34,31 +33,30 @@ class Enclosure(object):
 
     def mime_object(self):
         """
-        Creates the base MIME object. Default headers
-        are to be applied to the MIME object here.
+        Creates the base MIME object. Default headers are to be
+        applied to the MIME object here.
         """
         raise NotImplementedError
 
     @property
     def sender(self):
         """
-        Alias for the ``sender`` property of the
-        internal headers object.
+        Alias for the ``sender`` property of the internal
+        headers object.
         """
         return self.headers.sender
 
     @property
     def receivers(self):
         """
-        Alias for the ``receivers`` property of the
-        internal headers object.
+        Alias for the ``receivers`` property of the internal
+        headers object.
         """
         return self.headers.receivers
 
     def mime(self):
         """
-        Returns the finalised MIME object with the
-        headers specified in ``__init__`` applied.
+        Returns the finalised MIME object.
         """
         mime = self.mime_object()
         prepare_mime(mime, self.headers)
@@ -67,8 +65,8 @@ class Enclosure(object):
 
 class Collection(Enclosure):
     """
-    Represents a multipart MIME object. Collection
-    objects can be nested inside one another.
+    Represents a multipart MIME object. Collection objects can
+    be nested inside one another.
 
     :param enclosures: A container of enclosure
         objects to be attached.
@@ -88,16 +86,14 @@ class Collection(Enclosure):
 
 class PlainText(Enclosure):
     """
-    Represents a MIME object of the `text/plain`
-    subtype, with *content* and an optional
-    *encoding*.
+    Represents a MIME object of the `text/plain` subtype, with
+    *content* and an optional *encoding*.
 
     :param content: A unicode/byte string.
-    :param encoding: Name of encoding to be used.
-        If a byte string is provided in *content*
-        then *content* must be able to be decoded
-        by *encoding*. Else the unicode string is
-        encoded using *encoding*.
+    :param encoding: Name of encoding to be used. If a byte
+        string is provided in *content* then *content* must
+        be able to be decoded by *encoding*. Else the unicode
+        string is encoded using *encoding*.
     """
 
     subtype = 'plain'
@@ -115,8 +111,7 @@ class PlainText(Enclosure):
 
 class HTML(PlainText):
     """
-    :class:`PlainText` subclass with a mimetype of
-    ``text/html``.
+    :class:`PlainText` subclass with ``text/html`` mimetype.
     """
 
     subtype = 'html'
@@ -125,15 +120,14 @@ class HTML(PlainText):
 class Binary(Enclosure):
     """
     Represents an enclosure object around some binary
-    string/content *content*.
+    string *content*.
 
     :param content: Byte string containing content.
     :param mimetype: MIME-type of the content.
     :param encoding: Encoding/charset of the content.
     :param encoder: Encoder function, defaults to
-        :func:`email.encoders.encode_base64`. It
-        will be passed the created MIME object
-        for mutation.
+        :func:`email.encoders.encode_base64`. It will be
+        passed the created MIME object for mutation.
     :param headers: Optional headers.
     """
 
@@ -157,11 +151,10 @@ class Binary(Enclosure):
 
 class BinaryFile(Binary):
     """
-    Represents a :class:`Binary` enclosure with the
-    contents read from a given *path*. The main
-    advantage of this class is that the content
-    is lazily read and the mimetype and encoding
-    is automatically guessed.
+    Represents a :class:`Binary` enclosure with the contents
+    read from a given *path*. The main advantage of this class
+    is that the content is lazily read and the mimetype and
+    encoding is automatically guessed.
     """
 
     def __init__(self, path, headers=()):

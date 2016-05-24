@@ -11,12 +11,11 @@
 
 class Envelope(object):
     """
-    An Envelope is a wrapper around an enclosure
-    that provides a way to hide the "original"
-    sender/receivers. If you send an envelope,
-    then the message is sent from sender (*mail_from*)
-    to the receivers (*rcpt_to*), regardless of
-    the headers of the enclosure.
+    An Envelope is a wrapper around an enclosure that provides a
+    way to hide the "original" sender/receivers. If you send an
+    envelope, then the message is sent from sender (*mail_from*)
+    to the receivers (*rcpt_to*), regardless of the headers of
+    the enclosure.
 
     :param enclosure: Enclosure to wrap around.
     :param mail_from: Optional email address of sender.
@@ -32,9 +31,8 @@ class Envelope(object):
     @property
     def sender(self):
         """
-        Returns the address if specified in
-        ``mail_from``, else returns the `sender`
-        property of the enclosure.
+        Returns the address if specified in ``mail_from``, else
+        returns the `sender` property of the enclosure.
         """
         if self.mail_from is None:
             return self.enclosure.sender
@@ -43,9 +41,8 @@ class Envelope(object):
     @property
     def receivers(self):
         """
-        Returns the addresses if specified in
-        ``rcpt_to``, else returns the `receivers`
-        property of the enclosure.
+        Returns the addresses if specified in ``rcpt_to``, else
+        returns the `receivers` property of the enclosure.
         """
         if self.rcpt_to is None:
             return self.enclosure.receivers
@@ -53,7 +50,7 @@ class Envelope(object):
 
     def mime(self):
         """
-        Returns the result of calling the
-        ``mime`` method of the enclosure.
+        Returns the result of calling the ``mime`` method of
+        the enclosure.
         """
         return self.enclosure.mime()

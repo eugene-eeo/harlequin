@@ -2,8 +2,8 @@
     harlequin.headers
     ~~~~~~~~~~~~~~~~~
 
-    Implements datastructures for managing headers
-    without encoding hassles.
+    Implements datastructures for managing headers without
+    encoding hassles.
 
     :copyright: (c) 2016 Eeo Jun
     :license: MIT, see LICENSE for details.
@@ -16,8 +16,8 @@ from .utils import want_unicode, generate_header, encode_header
 
 class UnicodeDict(OrderedDict):
     """
-    A :class:`collections.OrderedDict` subclass that
-    converts all keys and values to unicode.
+    A :class:`collections.OrderedDict` subclass that converts
+    all keys and values to unicode.
     """
     def __setitem__(self, key, value):
         OrderedDict.__setitem__(self,
@@ -27,24 +27,22 @@ class UnicodeDict(OrderedDict):
 
 class Headers(UnicodeDict):
     """
-    :class:`UnicodeDict` subclass with some header
-    specific methods. Internally all headers are
-    converted to unicode.
+    :class:`UnicodeDict` subclass with some header specific
+    methods. Internally all headers are converted to unicode.
     """
 
     def add(self, key, value='', **params):
         """
-        Set the value of *key* to *value* and and
-        optionally some additional parameters in
-        the form of keyword arguments:
+        Set the value of *key* to *value* and and optionally
+        some additional parameters in the form of keyword args:
 
             >>> h = Headers()
             >>> h.add('X-Key', 'value', param='val')
             >>> h['X-Key']
             'value; param="val"'
 
-        Note that keyword arguments (parameters)
-        are implicitly converted to unicode.
+        Note that the keys and values of keyword arguments are
+        implicitly converted to unicode.
         """
         if not params:
             self[key] = value
@@ -55,8 +53,8 @@ class Headers(UnicodeDict):
     @property
     def resent(self):
         """
-        Returns a boolean depending on whether a
-        ``Resent-Date`` header is present.
+        Returns a boolean depending on whether a ``Resent-Date``
+        header is present.
         """
         return 'Resent-Date' in self
 
@@ -91,10 +89,9 @@ class Headers(UnicodeDict):
 
 def prepare_mime(mime, headers):
     """
-    Inject *headers* into a given *mime* object. A
-    *mime* object is any object that is a subclass
-    :class:`email.message.Message` or has a similar
-    interface.
+    Inject *headers* into a given *mime* object. A *mime* object
+    is any object that is a subclass :class:`email.message.Message`
+    or has a similar interface.
     """
     for key in headers:
         if key == 'Bcc' or key == 'Resent-Bcc':
