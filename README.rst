@@ -9,7 +9,7 @@ Harlequin: Sane MIME Handling
 
 An MIT-licensed, Python 3 ready library for a composable and sane
 alternative to MIME-handling in Python. Inspired by Werkzeug,
-Harlequin handles inconveniences associated with internalisation
+Harlequin handles inconveniences associated with internationalisation
 and encoding for you::
 
     >>> from harlequin.enclosure import PlainText
@@ -32,8 +32,8 @@ and encoding for you::
 Features
 --------
 
-- A saner headers system
+- Saner and friendlier headers system
 - Encoding functions and code you don't want to write
 - ``Resent-*`` aware headers and RFC compliance
 - Automatic sender/receiver address extraction
-- Unicode aware headers and classes
+- Unicode aware components
