@@ -129,7 +129,7 @@ class Binary(Enclosure):
 
     :param content: Byte string containing content.
     :param mimetype: MIME-type of the content.
-    :param charset: Encoding/charset of the content.
+    :param encoding: Encoding/charset of the content.
     :param encoder: Encoder function, defaults to
         :func:`email.encoders.encode_base64`. It
         will be passed the created MIME object

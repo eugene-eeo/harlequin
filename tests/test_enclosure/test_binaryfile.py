@@ -27,7 +27,7 @@ def test_binaryfile_mime(binary, filename):
     assert m.get_content_type() == 'image/gif' if is_gif else 'text/plain'
 
 
-def test_attachment_headers():
+def test_binaryfile_headers():
     b = BinaryFile(
         'tests/assets/binary.gif',
         headers={
