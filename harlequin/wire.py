@@ -31,18 +31,18 @@ def encode_address(addr):
     return addr.decode('utf-8')
 
 
-def sendmail_args(enclosure_like):
+def sendmail_args(envelope_like):
     """
-    Given an enclosure-like object (e.g.
-    :class:`harlequin.envelope.Envelope` or one of the
-    enclosures) *enclosure_like*, return a tuple
+    Given an envelope-like object (any class implementing
+    the same API as :class:`harlequin.envelope.Envelope`,
+    e.g. the enclosures) *envelope_like*, return a tuple
     in the form `(mail_from, rcpt_to, content)`
     suitable to be passed to the sendmail function.
     """
-    sender = encode_address(enclosure_like.sender)
-    receivers = [encode_address(k) for k in enclosure_like.receivers]
+    sender = encode_address(envelope_like.sender)
+    receivers = [encode_address(k) for k in envelope_like.receivers]
     return (
         sender,
         receivers,
-        enclosure_like.mime().as_string()
+        envelope_like.mime().as_string()
         )
