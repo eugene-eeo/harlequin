@@ -24,12 +24,13 @@ def test_collection_mime_object(parts, collection):
     m = collection.mime_object()
     assert not m.defects
 
-    mimes = m.get_payload()
-    assert mimes
+    real_mimes = m.get_payload()
+    assert real_mimes
 
-    for enclosure, mime in zip(parts, mimes):
-        assert mime.get_content_type() == 'text/plain'
-        assert mime.get_payload() == enclosure.mime().get_payload()
+    for enclosure, actual in zip(parts, real_mimes):
+        mime = enclosure.mime()
+        assert mime.get_content_type() == actual.get_content_type()
+        assert mime.get_payload() == actual.get_payload()
 
 
 def test_collection_mime_headers(collection):
