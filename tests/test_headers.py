@@ -23,11 +23,12 @@ def test_unicodedict_setitem():
 
 @pytest.mark.parametrize('value',  ['Value', want_bytes('Value')])
 @pytest.mark.parametrize('params', [
+    {},
     {'param': 'value'},
     {'param': want_bytes('value')},
 ])
 def test_headers_add(value, params):
-    v, p = want_unicode(value), dict(UnicodeDict(params))
+    v, p = want_unicode(value), UnicodeDict(params)
     h = Headers()
     h.add('Key', value, **params)
     assert parse_header(h['Key']) == (v, p)
