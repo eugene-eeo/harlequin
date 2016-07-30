@@ -19,8 +19,8 @@ def test_want_bytes():
     assert want_bytes('∂'.encode('punycode')) == '∂'.encode('punycode')
 
 
-@pytest.mark.parametrize('key', ['key', 'key\'', 'key\\'])
-@pytest.mark.parametrize('val', ['val', 'val\'', 'val\\'])
+@pytest.mark.parametrize('key', ['key', 'key\'', '"key\\'])
+@pytest.mark.parametrize('val', ['val', 'val\'', '"val\\'])
 def test_generate_header(key, val):
     header = generate_header(key, {key: val})
     k, params = parse_header(header)
