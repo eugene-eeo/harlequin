@@ -32,7 +32,7 @@ def test_binary_mime_object(binary):
         )
 
 
-def test_binary_encoder(binary):
+def test_binary_encoder():
     def traced(m):
         traced.mime = m
         traced.calls += 1
@@ -45,7 +45,7 @@ def test_binary_encoder(binary):
     assert traced.calls == 1
 
 
-def test_headers_priority(binary):
+def test_headers_priority():
     b = Binary(
         want_bytes('ü'),
         'application/x-encode',
