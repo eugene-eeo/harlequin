@@ -9,11 +9,12 @@ python:
     - 'pypy3'
 script:
     - py.test --cov=harlequin --strict -vv tests
+after_success:
+    - pip install codeclimate-test-reporter
     - codeclimate-test-reporter
 install:
     - pip install .
     - pip install pytest-localserver
     - pip install pytest-cov
-    - pip install codeclimate-test-reporter
 os:
     - linux
