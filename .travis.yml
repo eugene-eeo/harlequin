@@ -7,9 +7,13 @@ python:
     - '3.4'
     - 'pypy'
     - 'pypy3'
-script: py.test --strict -vv tests
+script:
+    - py.test --cov=harlequin --strict -vv tests
+    - codeclimate-test-reporter
 install:
     - pip install .
     - pip install pytest-localserver
+    - pip install pytest-cov
+    - pip install codeclimate-test-reporter
 os:
     - linux
