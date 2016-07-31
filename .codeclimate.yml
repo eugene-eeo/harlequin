@@ -1,4 +1,0 @@
-engines:
-  # it keeps registering docstrings as duplication.
-  duplication:
-    enabled: false
