@@ -17,7 +17,6 @@ setup(
         'pytest',
         'pytest-localserver',
         'pytest-cov',
-        'codeclimate-test-reporter',
     ],
     platforms='any',
     license='MIT',
