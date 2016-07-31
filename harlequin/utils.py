@@ -15,7 +15,7 @@ import mimetypes
 
 PY3 = sys.version_info[0] == 3
 unicode = str if PY3 else unicode
-bytes   = bytes if PY3 else str
+bytes = bytes if PY3 else str
 
 
 def want_bytes(s, charset='utf-8'):
