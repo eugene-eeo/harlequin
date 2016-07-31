@@ -5,8 +5,9 @@ from smtplib import SMTP
 from base64 import b64decode
 from email.parser import Parser
 from harlequin.enclosure import PlainText
+from harlequin.headers import encode_header
 from harlequin.wire import encode_address, sendmail_args
-from harlequin.utils import want_bytes, encode_header
+from harlequin.utils import want_bytes
 
 
 @pytest.fixture(scope='module')

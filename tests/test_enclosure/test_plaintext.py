@@ -2,7 +2,8 @@
 from __future__ import unicode_literals
 import pytest
 from base64 import b64decode
-from harlequin.utils import encode_header, want_bytes
+from harlequin.utils import want_bytes
+from harlequin.headers import encode_header
 from harlequin.enclosure import PlainText, HTML
 
 

@@ -14,7 +14,7 @@ from email.mime.base import MIMEBase
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-from .headers import Headers, prepare_mime
+from .headers import Headers, inject_headers
 from .utils import guess
 
 
@@ -59,7 +59,7 @@ class Enclosure(object):
         Returns the finalised MIME object.
         """
         mime = self.mime_object()
-        prepare_mime(mime, self.headers)
+        inject_headers(mime, self.headers)
         return mime
 
 

@@ -2,8 +2,7 @@
 import pytest
 from email.message import Message
 from harlequin.enclosure import Enclosure
-from harlequin.headers import Headers
-from harlequin.utils import encode_header
+from harlequin.headers import Headers, encode_header
 
 
 class CustomEnclosure(Enclosure):

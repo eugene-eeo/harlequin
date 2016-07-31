@@ -10,8 +10,46 @@
 """
 
 from collections import OrderedDict
-from email.utils import getaddresses
-from .utils import want_unicode, generate_header, encode_header
+from email.utils import getaddresses, quote
+from email.header import Header
+from .utils import want_unicode
+
+
+def generate_header(value, params):
+    """
+    Given unicode *value* and parameters *params* return a
+    string suitable for use as a value of a header. Usage
+    examples:
+
+        >>> generate_header('value')
+        'value'
+        >>> generate_header('value', {'param': 'val'})
+        'value; param="val"'
+
+    :param value: 'Main' value of the header
+    :param params: A dict or mapping of unicode strings.
+    """
+    parts = [quote(value)]
+    for key in params:
+        parts.append('%s="%s"' % (key, quote(params[key])))
+    return '; '.join(parts)
+
+
+def encode_header(string):
+    """
+    Given a unicode *string* encode it for use as a
+    value for a header. Internally this delegates
+    to :class:`email.header.Header`.
+    """
+    # Don't explicitly specify encoding so that the header
+    # class can figure out how to best encode the value.
+    # for instance:
+    #   >>> Header('one').encode()
+    #   'one'
+    #   >>> Header('one', charset='utf-8').encode()
+    #   '=?utf-8?q?one?='
+    return Header(string).encode()
+
 
 
 class UnicodeDict(OrderedDict):
@@ -87,7 +125,7 @@ class Headers(UnicodeDict):
         return [addr for _, addr in getaddresses(vals)]
 
 
-def prepare_mime(mime, headers):
+def inject_headers(mime, headers):
     """
     Inject *headers* into a given *mime* object. A *mime* object
     is any object that is a subclass :class:`email.message.Message`

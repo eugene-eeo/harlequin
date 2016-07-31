@@ -2,7 +2,7 @@
 import pytest
 from os.path import basename
 from harlequin.enclosure import BinaryFile
-from harlequin.utils import encode_header, generate_header
+from harlequin.headers import encode_header, generate_header
 
 
 @pytest.fixture(params=['binary.gif', 'text.txt'], scope='module')

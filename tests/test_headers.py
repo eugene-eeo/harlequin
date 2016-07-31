@@ -3,9 +3,14 @@ from __future__ import unicode_literals
 import pytest
 from email.message import Message
 from email.header import decode_header
+from email.utils import unquote
 from cgi import parse_header
-from harlequin.headers import UnicodeDict, Headers, prepare_mime
-from harlequin.utils import want_bytes, want_unicode, encode_header
+from harlequin.utils import want_bytes, want_unicode
+from harlequin.headers import (
+        UnicodeDict, Headers,
+        inject_headers, encode_header,
+        generate_header
+        )
 
 
 def test_unicodedict_init():
@@ -94,11 +99,24 @@ def test_headers_receivers(resent, headers):
         ]
 
 
-def test_prepare_mime(headers):
+def test_inject_headers(headers):
     mime = Message()
-    prepare_mime(mime, headers)
+    inject_headers(mime, headers)
     keys = list(mime.keys())
     for key in keys:
         assert key not in ('Bcc', 'Resent-Bcc')
         assert mime[key] == encode_header(headers[key])
     assert keys
+
+
+@pytest.mark.parametrize('key', ['key', 'key\'', '"key\\'])
+@pytest.mark.parametrize('val', ['val', 'val\'', '"val\\'])
+def test_generate_header(key, val):
+    header = generate_header(key, {key: val})
+    k, params = parse_header(header)
+    assert unquote(k), params == (key, {key: val})
+
+
+def test_encode_header():
+    assert encode_header('abc') == 'abc'
+    assert encode_header('é')   == '=?utf-8?b?w6k=?='
