@@ -17,13 +17,13 @@ def test_enclosure_mime_object():
 
 
 def test_enclosure_headers():
-    args = [
+    headers = [
         ('X-Key',  'value'),
         ('Sender', 'Sender <sender@mail.com>'),
         ('To',     'Receiver <to@mail.com>'),
     ]
-    enclosure = CustomEnclosure(args)
-    assert enclosure.headers == Headers(args)
+    enclosure = Enclosure(headers)
+    assert enclosure.headers == Headers(headers)
     assert enclosure.sender == 'sender@mail.com'
     assert enclosure.receivers == ['to@mail.com']
 
