@@ -43,7 +43,6 @@ def guess(path, fallback='application/octet-stream'):
     """
     Guess the mimetype and encoding for a given *path*,
     returning *fallback* if it cannot be guessed.
-    *fallback* defaults to ``application/octet-stream``.
     """
     guessed, encoding = mimetypes.guess_type(path, fallback)
     if guessed is None:
