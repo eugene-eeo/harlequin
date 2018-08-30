@@ -1,4 +1,4 @@
-build: off
+build_script:
 environment:
   matrix:
     - PYTHON: "C:\\Python27"
