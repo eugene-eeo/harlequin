@@ -51,8 +51,9 @@ def test_headers_priority():
         want_bytes('ü'),
         'application/x-encode',
         headers=[
-            ('Content-Type', 'thing'),
+            ('Content-Type', 'application/x-thing'),
         ])
     m = b.mime()
     assert not m.defects
-    assert m['Content-Type'] == encode_header('thing')
+    assert m['Content-Type'] == encode_header('application/x-thing')
+    assert m.get_content_type() == 'application/x-thing'

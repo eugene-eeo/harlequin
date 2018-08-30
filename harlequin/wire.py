@@ -13,9 +13,8 @@
 def encode_address(addr):
     """
     Given a unicode address *addr*, return a (byte, on
-    Python 2) string that is suitable to be passed as an
-    argument to sendmail. It encodes the local-part using
-    UTF-8 and the domain using IDNA.
+    Python 3) string that is suitable to be passed as an
+    argument to sendmail.
     """
     try:
         addr = addr.encode('ascii')

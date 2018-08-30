@@ -127,7 +127,7 @@ class Binary(Enclosure):
     :param encoding: Encoding/charset of the content.
     :param encoder: Encoder function, defaults to
         :func:`email.encoders.encode_base64`. It will be
-        passed the created MIME object for mutation.
+        called with the created MIME object.
     :param headers: Optional headers.
     """
 

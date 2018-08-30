@@ -44,8 +44,7 @@ def test_sendmail_args(enclosure):
 
 
 def test_sendmail_real(smtpserver, enclosure):
-    host = smtpserver.addr[0]
-    port = smtpserver.addr[1]
+    host, port, _, _ = smtpserver.addr
     s = SMTP(host, port)
     s.sendmail(*sendmail_args(enclosure))
     s.quit()

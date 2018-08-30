@@ -20,8 +20,7 @@ def envelope(request, enclosure):
             'mail_from': 'mail_from@mail.com',
             'rcpt_to': ['rcpt_to@mail.com'],
         }
-    env = Envelope(enclosure, **args)
-    return env
+    return Envelope(enclosure, **args)
 
 
 def test_envelope(envelope, enclosure):
